@@ -1,5 +1,6 @@
 # WSB Sentiment Analysis
-![WSB logo](https://miro.medium.com/max/360/0*qNLy1P3pAfcivIbz)
+![graph](tsla.png)
+Note: This plot does not display the right TSLA price.
 
 ## Idea
 
@@ -7,8 +8,7 @@ I scraped posts and comments with stock ticker information from r/wallstreetbets
 
 ## Todo
 
-* Conduct sentiment analysis.
-  * Need to adjust for options terminology (i.e. puts, calls, bear, bull)
-* Get average sentiment.
-* Plot average sentiment as a function of time.
-* Overlay stock/option movements on plot and test for correlation.
+* Refactor code
+  * Any subreddit
+  * Write as script and save df to output directory
+* Try inference based on WSB
