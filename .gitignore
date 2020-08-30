@@ -3,3 +3,4 @@ praw.ini
 .vscode/
 symbols.csv
 stonks/
+__pycache__/
