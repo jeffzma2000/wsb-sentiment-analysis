@@ -1,0 +1,5 @@
+.env
+praw.ini
+.vscode/
+symbols.csv
+stonks/
