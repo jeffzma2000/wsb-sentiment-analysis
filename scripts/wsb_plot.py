@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from iexfinance.stocks import get_historical_data
+import pandas as pd
 
 def get_mean(df):
 
@@ -11,6 +12,7 @@ def get_mean(df):
 def plot_scores(df, title, symbol):
 
     mean_scores = get_mean(df)
+    
 
     start = df['Date'].min()
     end = df['Date'].max()

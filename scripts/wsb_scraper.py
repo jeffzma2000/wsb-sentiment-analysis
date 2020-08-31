@@ -42,12 +42,12 @@ def get_date(submission):
         time = submission
     return datetime.date.fromtimestamp(time)
 
-def scrape_for(symbol, limit=10, before='30d', after='120d', subreddit='wallstreetbets'):
+def scrape_for(symbol, limit=10, after='120d', subreddit='wallstreetbets'):
     result = []
-    url_for_comment = 'https://api.pushshift.io/reddit/search/comment/?q={0}&subreddit={1}&after={2}&size={3}&sort_type=score&before={4}'.format(symbol, subreddit, after, limit, before)
+    url_for_comment = 'https://api.pushshift.io/reddit/search/comment/?q={0}&subreddit={1}&after={2}&size={3}&sort_type=score'.format(symbol, subreddit, after, limit)
     comments = requests.get(url_for_comment).json()['data']
 
-    url_for_submission = 'https://api.pushshift.io/reddit/search/submission/?q={0}&subreddit={1}&after={2}&size={3}&sort_type=score&before={4}'.format(symbol, subreddit, after, limit, before)
+    url_for_submission = 'https://api.pushshift.io/reddit/search/submission/?q={0}&subreddit={1}&after={2}&size={3}&sort_type=score'.format(symbol, subreddit, after, limit)
     submissions = requests.get(url_for_submission).json()['data']
 
     for comment in comments:
@@ -72,26 +72,3 @@ def scrape_for(symbol, limit=10, before='30d', after='120d', subreddit='wallstre
 
     return scored_df
 
-
-def scrape_for2(symbol, limit=None, subreddit=wsb):
-
-    result = []
-
-    # gets top commnets in top submissions
-    for submission in wsb.hot(limit=limit):
-        date = get_date(submission)
-        for word in submission.title.split():
-            if word.lower() == symbol.lower():
-                result.append((submission.title, date))
-                submission.comments.replace_more(limit=0)
-                for top_level_comment in submission.comments:
-                    result.append((top_level_comment.body, date))
-                break
-    
-    # creates a dataframe from API results
-    df = pd.DataFrame(result, columns=['Text', 'Date'])
-
-    # updates dataframe to include sentiments
-    scored_df = df.join(get_sentiment(df['Text']), rsuffix='_right')
-
-    return scored_df
